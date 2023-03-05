@@ -4,6 +4,8 @@ const mongoose = require('mongoose');
 const cors = require('cors');
 const morgan = require('morgan');
 
+const tasksRouter = require('./controllers/tasks');
+
 // initialize app
 const app = express();
 
@@ -34,6 +36,9 @@ app.use(morgan('dev'));
 app.get('/', (req, res) => {
     res.send('Welcome to onit');
 });
+
+    // router for routes
+app.use(tasksRouter);
 
 // tell app to listen
 app.listen(PORT, () => {

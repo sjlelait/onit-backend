@@ -4,7 +4,6 @@ const mongoose = require('mongoose');
 const cors = require('cors');
 const morgan = require('morgan');
 
-
 // initialize app
 const app = express();
 
@@ -14,6 +13,7 @@ require('dotenv').config();
 const { PORT, DATABASE_URL } = process.env;
 
 // database connection
+mongoose.set('strictQuery', true);
 mongoose.connect(DATABASE_URL);
 
 // Mongo connection Events

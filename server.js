@@ -4,8 +4,6 @@ const mongoose = require('mongoose');
 const cors = require('cors');
 const morgan = require('morgan');
 
-const tasksRouter = require('./controllers/tasks');
-
 // initialize app
 const app = express();
 
@@ -20,10 +18,11 @@ mongoose.connect(DATABASE_URL);
 
 // Mongo connection Events
 mongoose.connection
-    .on('open', () => console.log('You are connected to MongoDB'))
-    .on('close', () => console.log('You are disconnected from MongoDB'))
-    .on('error', (error) => console.log(`MongoDB Error: ${error.message}`));
+.on('open', () => console.log('You are connected to MongoDB'))
+.on('close', () => console.log('You are disconnected from MongoDB'))
+.on('error', (error) => console.log(`MongoDB Error: ${error.message}`));
 
+const tasksRouter = require('./controllers/tasks');
 
 // mount middleware
 app.use(express.json());
@@ -32,13 +31,13 @@ app.use(morgan('dev'));
 
 // mount routes
 // INDUCES
-    // test route
+    // test route -- working
 app.get('/', (req, res) => {
     res.send('Welcome to onit');
 });
 
     // router for routes
-app.use(tasksRouter);
+app.use('/tasks', tasksRouter);
 
 // tell app to listen
 app.listen(PORT, () => {

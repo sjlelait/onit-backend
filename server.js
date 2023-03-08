@@ -22,7 +22,6 @@ mongoose.connection
 .on('close', () => console.log('You are disconnected from MongoDB'))
 .on('error', (error) => console.log(`MongoDB Error: ${error.message}`));
 
-const tasksRouter = require('./controllers/tasks');
 
 // mount middleware
 app.use(express.json());
@@ -30,6 +29,7 @@ app.use(cors());
 app.use(morgan('dev'));
 
 // mount routes
+const tasksRouter = require('./controllers/tasks');
 // INDUCES
     // test route -- working
 app.get('/', (req, res) => {

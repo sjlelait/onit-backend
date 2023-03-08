@@ -7,6 +7,7 @@ const TaskSchema = new Schema({
     timeframe: Number,
     priority: Number,
     complete: Boolean,
+    important: Boolean,
     subtask: [{ type: Schema.Types.ObjectId, ref: 'Subtask'}],
     createdBy: String
 }, { timestamps: true });

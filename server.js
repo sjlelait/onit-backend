@@ -25,7 +25,7 @@ const { PORT,
         GOOGLE_PRIVATE_KEY,
         GOOGLE_CLIENT_ID } = process.env;
 
-admin.initializeApp({
+admin.initializeApp({ 
     credential: admin.credential.cert({
   "type": "service_account",
     "project_id": "onit-f8dae",

@@ -5,6 +5,7 @@ const cors = require('cors');
 const morgan = require('morgan');
 const admin = require('firebase-admin');
 const { getAuth } = require('firebase-admin/auth')
+const methodOverride = require("method-override");
 
 // connect Task Model
 const Task = require('./models/task');
@@ -55,7 +56,7 @@ mongoose.connection
 app.use(express.json());
 app.use(cors());
 app.use(morgan('dev'));
-
+app.use(methodOverride("_method"));
 
 // FB - Authorization/Authentication Middleware
 app.use(async function(req, res, next) {

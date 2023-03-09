@@ -12,7 +12,7 @@ router.get('/home', async (req, res) => {
     }
 });
 
-// NEW "/new"
+// NEW "/tasks/new"
 
 // DELETE
 
@@ -30,7 +30,7 @@ router.post('/tasks', async (req, res) => {
 
 // EDIT no route? edits on same page?
 
-// SHOW "/task"
+// SHOW "/tasks"
 
 
 

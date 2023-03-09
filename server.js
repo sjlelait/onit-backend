@@ -6,6 +6,10 @@ const morgan = require('morgan');
 const admin = require('firebase-admin');
 const { getAuth } = require('firebase-admin/auth')
 
+// connect Task Model
+const Task = require('./models/task');
+// connect Tasks Controller
+const tasksRouter = require('./controllers/tasks');
 // initialize app
 const app = express();
 
@@ -75,15 +79,15 @@ function isAuthenticated(req, res, next) {
  }
 
 // mount routes
-const tasksRouter = require('./controllers/tasks');
+// router for routes
+app.use(tasksRouter);
+
 // INDUCES
     // test route -- working
 app.get('/', isAuthenticated, (req, res) => {
     res.send('Welcome to onit');
 });
 
-    // router for routes
-app.use('/tasks', tasksRouter);
 
 // tell app to listen
 app.listen(PORT, () => {

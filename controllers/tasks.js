@@ -22,7 +22,25 @@ router.delete('/tasks/:id', async (req, res) => {
         res.status(400).json({ message: "something went wrong"});
     }
 });
-// UPDATE 
+//UPDATE
+router.put('/tasks/:id', async (req, res) => {
+    try {
+      res.status(201).json(
+        await Task.findByIdAndUpdate(
+          req.params.id,
+          req.body,
+          {
+            new: true,
+          }
+          // (err, updatedTask) => {
+          //   res.redirect(`/tasks/${req.params.id}`);
+          // }
+        )
+      );
+    } catch (error) {
+      res.status(400).json({ message: 'something went wrong' });
+    }
+  });
 
 // CREATE /tasks"
 // THIS WORKS

@@ -35,8 +35,25 @@ router.post('/tasks', async (req, res) => {
 });
 
 // EDIT no route? edits on same page?
+router.get('/tasks/:id/edit', async (req, res) => {
+  try {
+    res.status(200).json(await Task.findById(req.params.id));
+  } catch (error) {
+    res.status(400).json({ message: 'something went wrong' });
+  }
+});
 
 // SHOW "/tasks"
+router.get('/tasks/:id', async (req, res) => {
+    try {
+      res.status(200).json(
+        await Task.findById(req.params.id)
+        );
+        console.log(req.body)
+    } catch (error) {
+      res.status(400).json({ message: "something went wrong" });
+    }
+  });
 
 
 

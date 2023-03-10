@@ -1,6 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const Task = require('../models/task');
+const Subtask = require('../models/subtask');
 
 // INDEX "/home" 
 // this works- brings back ALL Tasks 
@@ -14,6 +15,7 @@ router.get('/home', async (req, res) => {
 
 // NEW "/tasks/new"
 
+ 
 // DELETE
 router.delete('/tasks/:id', async (req, res) => {
     try {
@@ -52,7 +54,9 @@ router.post('/tasks', async (req, res) => {
     }
 });
 
-// EDIT no route? edits on same page?
+
+
+// EDIT ** DOes this need to be findByIdAndUpdate??
 router.get('/tasks/:id/edit', async (req, res) => {
   try {
     res.status(200).json(await Task.findById(req.params.id));
@@ -61,11 +65,11 @@ router.get('/tasks/:id/edit', async (req, res) => {
   }
 });
 
-// SHOW "/tasks"
+// SHOW "/tasks" ***** Edited to populate Subtasks 
 router.get('/tasks/:id', async (req, res) => {
     try {
       res.status(200).json(
-        await Task.findById(req.params.id)
+        await Task.findById({ _id: req.params.id }).populate('subtask')
         );
         console.log(req.body)
     } catch (error) {
@@ -73,6 +77,23 @@ router.get('/tasks/:id', async (req, res) => {
     }
   });
 
-
-
+// SUBTASKS ROUTE (show page for Task)
+/*
+// CREATE SUBTASK "/tasks/:id/subtasks"
+router.post('/tasks/:id/subtasks', async (req, res) => {
+    try {
+        res.status(201).json(
+            await Subtask.create(req.body, (err, createdSubtask) => {
+                Task.findByIdAndUpdate(req.params.taskId, 
+                    { $push: { subtask: createdSubtask } }
+                )
+                console.log(req.body)
+            })
+        )
+    } catch (error) {
+        res.status(400).json({ message: "something went wrong" });
+    }
+});   
+    // SHOW SUBTASK
+*/
 module.exports = router;

@@ -15,7 +15,19 @@ router.get('/home', async (req, res) => {
 
 // NEW "/tasks/new"
 // frontend routing
- 
+
+// IMPORTANT     
+router.get('/tasks/important', async (req, res) => {
+    try {
+      res.status(200).json(
+        await Task.find({ important: true })
+        );
+    } catch (error) {
+      res.status(400).json({ message: "something went wrong" });
+    }
+  });
+
+
 // DELETE
 router.delete('/tasks/:id', async (req, res) => {
     try {
@@ -85,6 +97,7 @@ router.get('/tasks/:id/subtasks', async (req, res) => {
         await Task.findById({ _id: req.params.id }).populate('subtask')
         );
         console.log(req.body)
+        
     } catch (error) {
       res.status(400).json({ message: "something went wrong" });
     }

@@ -54,9 +54,19 @@ router.post('/tasks', async (req, res) => {
     }
 });
 
+// CREATE SUBTASK "/tasks/:id/subtasks"
+router.post('/tasks/:id/subtasks', async (req, res) => {
+    try {
+        const createdSubtask = await Subtask.create(req.body);
+        await Task.findByIdAndUpdate(req.params.id, { $push: { subtask: createdSubtask } });
+        res.status(201).json(createdSubtask);
+    } catch (error) {
+        res.status(400).json({ message: "something went wrong" });
+    }
+});
 
 
-// EDIT ** DOes this need to be findByIdAndUpdate??
+// EDIT ** Does this need to be findByIdAndUpdate??
 router.get('/tasks/:id/edit', async (req, res) => {
   try {
     res.status(200).json(await Task.findById(req.params.id));
@@ -78,22 +88,10 @@ router.get('/tasks/:id', async (req, res) => {
   });
 
 // SUBTASKS ROUTE (show page for Task)
-/*
-// CREATE SUBTASK "/tasks/:id/subtasks"
-router.post('/tasks/:id/subtasks', async (req, res) => {
-    try {
-        res.status(201).json(
-            await Subtask.create(req.body, (err, createdSubtask) => {
-                Task.findByIdAndUpdate(req.params.taskId, 
-                    { $push: { subtask: createdSubtask } }
-                )
-                console.log(req.body)
-            })
-        )
-    } catch (error) {
-        res.status(400).json({ message: "something went wrong" });
-    }
-});   
-    // SHOW SUBTASK
-*/
+
+
+
+
+// SHOW SUBTASK
+
 module.exports = router;

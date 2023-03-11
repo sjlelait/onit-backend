@@ -45,7 +45,7 @@ router.post('/tasks', async (req, res) => {
     }
 });
 
-// CREATE SUBTASK "/tasks/:id/subtasks"
+// CREATE SUBTASK "/tasks/:id/subtasks" .  *
 router.post('/tasks/:id/subtasks', async (req, res) => {
     try {
         const createdSubtask = await Subtask.create(req.body);
@@ -66,7 +66,7 @@ router.get('/tasks/:id/edit', async (req, res) => {
   }
 });
 
-// SHOW LIST  *** this will be all items, sorted by category
+// SHOW LIST  *** this will be all items, sorted by category *
 router.get('/tasks/:category', async (req, res) => {
     try {
       res.status(200).json(
@@ -78,7 +78,7 @@ router.get('/tasks/:category', async (req, res) => {
     }
   });
 
-// SHOW TASK *** this will be a Task with subtasks
+// SHOW TASK *** this will be a Task with subtasks *
 router.get('/tasks/:id/subtasks', async (req, res) => {
     try {
       res.status(200).json(

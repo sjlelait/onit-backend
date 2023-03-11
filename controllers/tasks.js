@@ -14,7 +14,7 @@ router.get('/home', async (req, res) => {
 });
 
 // NEW "/tasks/new"
-
+// frontend routing
  
 // DELETE
 router.delete('/tasks/:id', async (req, res) => {
@@ -24,28 +24,19 @@ router.delete('/tasks/:id', async (req, res) => {
         res.status(400).json({ message: "something went wrong"});
     }
 });
+
 //UPDATE
 router.put('/tasks/:id', async (req, res) => {
     try {
       res.status(201).json(
-        await Task.findByIdAndUpdate(
-          req.params.id,
-          req.body,
-          {
-            new: true,
-          }
-          // (err, updatedTask) => {
-          //   res.redirect(`/tasks/${req.params.id}`);
-          // }
-        )
+        await Task.findByIdAndUpdate(req.params.id, req.body, { new: true })
       );
     } catch (error) {
       res.status(400).json({ message: 'something went wrong' });
     }
   });
 
-// CREATE /tasks"
-// THIS WORKS
+// CREATE "/tasks"
 router.post('/tasks', async (req, res) => {
     try {
         res.status(201).json(await Task.create(req.body));
@@ -66,7 +57,7 @@ router.post('/tasks/:id/subtasks', async (req, res) => {
 });
 
 
-// EDIT ** Does this need to be findByIdAndUpdate??
+// EDIT TASK
 router.get('/tasks/:id/edit', async (req, res) => {
   try {
     res.status(200).json(await Task.findById(req.params.id));
@@ -75,8 +66,20 @@ router.get('/tasks/:id/edit', async (req, res) => {
   }
 });
 
-// SHOW "/tasks" ***** Edited to populate Subtasks 
-router.get('/tasks/:id', async (req, res) => {
+// SHOW LIST  *** this will be all items, sorted by category
+router.get('/tasks/:category', async (req, res) => {
+    try {
+      res.status(200).json(
+        await Task.find({ category: req.params.category })
+        );
+        console.log(req.body)
+    } catch (error) {
+      res.status(400).json({ message: "something went wrong" });
+    }
+  });
+
+// SHOW TASK *** this will be a Task with subtasks
+router.get('/tasks/:id/subtasks', async (req, res) => {
     try {
       res.status(200).json(
         await Task.findById({ _id: req.params.id }).populate('subtask')
@@ -87,11 +90,6 @@ router.get('/tasks/:id', async (req, res) => {
     }
   });
 
-// SUBTASKS ROUTE (show page for Task)
 
-
-
-
-// SHOW SUBTASK
 
 module.exports = router;

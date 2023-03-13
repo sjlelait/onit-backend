@@ -60,6 +60,15 @@ router.post('/tasks', async (req, res) => {
   }
 });
 
+// CREATE task within list "/tasks/:category"
+router.post('/tasks/:category', async (req, res) => {
+  try {
+    res.status(201).json(await Task.create(req.body));
+  } catch (error) {
+    res.status(400).json({ message: 'something went wrong' });
+  }
+});
+
 // CREATE SUBTASK "/tasks/:id/subtasks" .  *
 router.post('/tasks/:id/subtasks', async (req, res) => {
   try {

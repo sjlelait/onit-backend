@@ -60,6 +60,16 @@ router.post('/tasks', async (req, res) => {
   }
 });
 
+// // CREATE category
+// router.post('/', async (req, res) => {
+//   try {
+//     res.status(201).json(await Task.create(req.body));
+//   } catch (error) {
+//     res.status(400).json({ message: 'something went wrong' });
+//   }
+// });
+
+
 // CREATE task within list "/tasks/:category"
 router.post('/tasks/:category', async (req, res) => {
   try {
@@ -112,6 +122,8 @@ router.get('/tasks/:id/subtasks', async (req, res) => {
     res.status(400).json({ message: 'something went wrong' });
   }
 });
+
+
 
 
 module.exports = router;

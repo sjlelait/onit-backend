@@ -4,7 +4,7 @@ const Schema = mongoose.Schema;
 const TaskSchema = new Schema({
     title: { type: String, required: true },
     category: { type: String, required: true },
-    timeframe: Number,
+    timeframe: String,
     priority: Number,
     complete: { type: Boolean, default: false },
     important: { type: Boolean, default: false },

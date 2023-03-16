@@ -54,6 +54,7 @@ router.put('/tasks/:id', async (req, res) => {
 // CREATE "/tasks"
 router.post('/tasks', async (req, res) => {
   try {
+    req.body.createdBy = req.user;
     res.status(201).json(await Task.create(req.body));
   } catch (error) {
     res.status(400).json({ message: 'something went wrong' });
@@ -73,6 +74,7 @@ router.post('/tasks', async (req, res) => {
 // CREATE task within list "/tasks/:category"
 router.post('/tasks/:category', async (req, res) => {
   try {
+    req.body.createdBy = req.user;
     res.status(201).json(await Task.create(req.body));
   } catch (error) {
     res.status(400).json({ message: 'something went wrong' });
@@ -82,6 +84,7 @@ router.post('/tasks/:category', async (req, res) => {
 // CREATE SUBTASK "/tasks/:id/subtasks" .  *
 router.post('/tasks/:id/subtasks', async (req, res) => {
   try {
+    
     const createdSubtask = await Subtask.create(req.body);
     await Task.findByIdAndUpdate(req.params.id, {
       $push: { subtask: createdSubtask },

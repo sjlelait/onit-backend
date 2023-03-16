@@ -7,11 +7,12 @@ const Subtask = require('../models/subtask');
 // this works- brings back ALL Tasks
 router.get('/home', async (req, res) => {
   try {
-    res.status(200).json(await Task.find({}));
+    res.status(200).json(await Task.find({createdBy: req.user.uid}));
   } catch (error) {
     res.status(400).json({ message: 'something went wrong' });
   }
 });
+
 
 // NEW "/tasks/new"
 // frontend routing
@@ -54,7 +55,7 @@ router.put('/tasks/:id', async (req, res) => {
 // CREATE "/tasks"
 router.post('/tasks', async (req, res) => {
   try {
-    req.body.createdBy = req.user;
+    req.body.createdBy = req.user.uid;
     res.status(201).json(await Task.create(req.body));
   } catch (error) {
     res.status(400).json({ message: 'something went wrong' });
@@ -74,7 +75,7 @@ router.post('/tasks', async (req, res) => {
 // CREATE task within list "/tasks/:category"
 router.post('/tasks/:category', async (req, res) => {
   try {
-    req.body.createdBy = req.user;
+    req.body.createdBy = req.user.uid;
     res.status(201).json(await Task.create(req.body));
   } catch (error) {
     res.status(400).json({ message: 'something went wrong' });
@@ -83,6 +84,7 @@ router.post('/tasks/:category', async (req, res) => {
 
 // CREATE SUBTASK "/tasks/:id/subtasks" .  *
 router.post('/tasks/:id/subtasks', async (req, res) => {
+  req.body.createdBy = req.user.uid;
   try {
     
     const createdSubtask = await Subtask.create(req.body);

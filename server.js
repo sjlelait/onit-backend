@@ -84,11 +84,6 @@ function isAuthenticated(req, res, next) {
 // router for routes
 app.use(isAuthenticated, tasksRouter); // Remove isAuthenticated for testing(will not have to sign in after)
 
-// INDUCES
-// test route -- working
-app.get('/', (req, res) => {
-  res.send('Welcome to onit');
-});
 
 // tell app to listen
 app.listen(PORT, () => {

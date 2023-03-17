@@ -37,17 +37,23 @@ router.get('/tasks/important', async (req, res) => {
 
 // DELETE
 router.delete('/tasks/:id', async (req, res) => {
+  console.log('Received delete request for id:', req.params.id);
   try {
     const task = await Task.findOne({ _id: req.params.id, createdBy: req.user.uid });
+    console.log('Task found:', task);
     if (!task) {
       return res.status(404).json({ message: 'Task not found' });
     }
-    await task.remove();
+    await Task.deleteOne({ _id: req.params.id });
+    console.log('Task removed:', task);
     res.status(200).json({ message: 'Task deleted successfully' });
   } catch (error) {
+    console.error('Error during deletion:', error);
     res.status(400).json({ message: 'something went wrong' });
   }
 });
+
+
 
 
 //UPDATE

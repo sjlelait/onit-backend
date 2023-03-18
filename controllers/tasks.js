@@ -74,6 +74,24 @@ router.put('/tasks/:id', async (req, res) => {
   }
 });
 
+//UPDATE Subtask
+
+router.put('/tasks/:id/subtasks/:subtaskId', async (req, res) => {
+  try {
+    const subtask = await Subtask.findById(req.params.subtaskId);
+    if (!subtask) {
+      return res.status(401).json({ message: 'Unauthorized' });
+    }
+    res
+      .status(201)
+      .json(
+        await Subtask.findByIdAndUpdate(req.params.subtaskId, req.body, { new: true })
+      );
+  } catch (error) {
+    res.status(400).json({ message: 'something went wrong' });
+  }
+});
+
 
 // CREATE "/tasks"
 router.post('/tasks', async (req, res) => {
@@ -121,6 +139,7 @@ router.post('/tasks/:id/subtasks', async (req, res) => {
   }
 });
 
+
 // EDIT TASK
 router.get('/tasks/:id/edit', async (req, res) => {
   try {
@@ -137,6 +156,7 @@ router.get('/tasks/:id/edit', async (req, res) => {
     res.status(400).json({ message: 'something went wrong' });
   }
 });
+
 
 
 // SHOW LIST  *** this will be all items, sorted by category *

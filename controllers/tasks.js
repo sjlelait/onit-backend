@@ -53,7 +53,26 @@ router.delete('/tasks/:id', async (req, res) => {
   }
 });
 
-
+// DELETE SUBTASK
+router.delete('/tasks/:id/subtasks/:subtaskId', async (req, res) => {
+  try {
+    const { id, subtaskId } = req.params;
+    const task = await Task.findOne({ _id: req.params.id, createdBy: req.user.uid });
+    if (!task) {
+      return res.status(404).json({ error: 'Task not found' });
+    }
+  const subtaskIndex = task.subtask.findIndex((subtask) => subtask._id === subtaskId);
+  if (subtaskIndex === -1) {
+    return res.status(404).json({ error: 'Subtask not found' });
+    }
+  task.subtask.splice(subtaskIndex, 1);
+  await task.save();
+  res.status(204).send();
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: 'Server error' });
+  }
+});
 
 
 //UPDATE

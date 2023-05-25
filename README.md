@@ -26,6 +26,7 @@
 
 # Getting started
 ### [Click Here](https://onit-app.netlify.app/) to see the deployed app!
+### [Click Here](https://github.com/sjlelait/onit-frontend) to see the frontend repo.
 
 # Screenshots 
 <img src =‘https://i.imgur.com/LDxH1yo.png’>
